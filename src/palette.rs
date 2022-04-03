@@ -15,7 +15,7 @@ pub fn create_palette() -> Vec<PaletteColor> {
         },
         PaletteColor {
             name: "red".to_string(),
-            color: [16, 69, 0],
+            color: [255, 69, 0],
         },
         PaletteColor {
             name: "orange".to_string(),
