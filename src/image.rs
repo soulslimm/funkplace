@@ -12,7 +12,7 @@ pub fn load_image_cells(lookup: &HashMap<[u8; 3], usize>) -> (usize, usize, Vec<
     let info = reader.next_frame(&mut buf).unwrap();
     let bytes = &buf[..info.buffer_size()];
 
-    let log_text = format!("Decoding {:?}", info.color_type);
+    let log_text = format!("Decoding PNG, color type: {:?}", info.color_type);
     web_sys::console::log_1(&log_text.into());
 
     assert_eq!(info.color_type, ColorType::Rgba);
