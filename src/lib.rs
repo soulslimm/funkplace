@@ -6,7 +6,8 @@ mod palette;
 use std::collections::HashMap;
 
 use rand::Rng;
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::{prelude::*, JsCast};
+use web_sys::HtmlElement;
 
 use crate::{image::load_image_cells, palette::create_palette};
 
@@ -38,7 +39,22 @@ pub fn main() {
     let color = &colors[cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
 
+    let color_str = format!(
+        "rgb({}, {}, {})",
+        color.color[0], color.color[1], color.color[2]
+    );
+
     // Initialize the page with the picked color
-    let val = document.get_element_by_id("app").unwrap();
-    val.set_inner_html(&text);
+    let label = document.get_element_by_id("pp-text").unwrap();
+    label.set_inner_html(&text);
+
+    let color_box = document
+        .get_element_by_id("pp-color")
+        .unwrap()
+        .dyn_into::<HtmlElement>()
+        .unwrap();
+    color_box
+        .style()
+        .set_property("background-color", &color_str)
+        .unwrap();
 }

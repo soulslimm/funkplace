@@ -8,9 +8,10 @@
     <title>placeplace</title>
 </head>
 <body class="h-full flex justify-center bg-slate-50">
-    <p class="p-2 mt-8 drop-shadow-md bg-white rounded" style="width:500px;height:300px;" id="app">
-        Loading...
-    </p>
+    <div class="p-2 mt-8 drop-shadow-md bg-white rounded space-y-4" style="width:500px;height:300px;" id="app">
+        <p id="pp-text">Loading...</p>
+        <div id="pp-color" class="w-16 h-8 bg-slate-50 rounded drop-shadow"></div>
+    </div>
     <script type="module">
         import init from './placeplace.js';
         init();
