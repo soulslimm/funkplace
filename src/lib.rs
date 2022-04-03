@@ -13,9 +13,9 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
-const READY: bool = false;
-const OFFSET_X: usize = 0;
-const OFFSET_Y: usize = 0;
+const READY: bool = true;
+const OFFSET_X: usize = 879;
+const OFFSET_Y: usize = 1898;
 
 #[wasm_bindgen(start)]
 pub fn main() {
