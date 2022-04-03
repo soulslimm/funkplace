@@ -26,11 +26,14 @@ pub fn load_image_cells(lookup: &HashMap<[u8; 3], usize>) -> (usize, usize, Vec<
         let pixel = &bytes[start_byte..start_byte + 4];
         let color = [pixel[0], pixel[1], pixel[2]];
 
-        let log_text = format!("{} {} {:?}", x, y, color);
-        web_sys::console::log_1(&log_text.into());
-
-        let color_index = lookup.get(&color).expect("Failed to look up color");
-        *cell = *color_index as u8;
+        if let Some(color_index) = lookup.get(&color) {
+            *cell = *color_index as u8;
+        } else {
+            let log_text = format!("Invalid pixel: ({}, {}) -> {:?}", x, y, color);
+            web_sys::console::log_1(&log_text.into());
+    
+            *cell = 0;
+        }
     }
 
     (width, height, cells)
