@@ -89,7 +89,7 @@ fn pick_new_pixel() {
     let color = &GLOBAL.colors[GLOBAL.cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
     let direct_link = format!("https://www.reddit.com/r/place/?cx={}&cy={}&px=11", x, y);
-    let link_html = format!("<a href=\"{}\">Direct link to r/place location...</a>", direct_link);
+    let link_html = format!("<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{}\">Direct link to r/place location...</a>", direct_link);
 
     let color_str = color_to_rgb(color.color);
 
