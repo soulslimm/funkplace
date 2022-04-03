@@ -8,9 +8,12 @@
     <title>placeplace</title>
 </head>
 <body class="h-full flex justify-center bg-slate-50">
-    <div class="p-2 mt-8 drop-shadow-md bg-white rounded space-y-4" style="width:500px;height:300px;" id="app">
-        <p id="pp-text">Loading...</p>
-        <div id="pp-color" class="w-16 h-8 bg-slate-50 rounded drop-shadow"></div>
+    <div class="p-2 mt-8 drop-shadow-md bg-white rounded flex flex-col justify-between" style="width:500px;height:300px;" id="app">
+        <div class="space-y-2">
+            <p id="pp-text">Loading...</p>
+            <div id="pp-color" class="w-16 h-8 bg-slate-50 rounded drop-shadow"></div>
+        </div>
+        <button id="pp-button-new" class="rounded w-full py-2 bg-blue-500 hover:bg-blue-400 text-white font-semibold drop-shadow">New Pixel</button>
     </div>
     <script type="module">
         import init from './placeplace.js';
