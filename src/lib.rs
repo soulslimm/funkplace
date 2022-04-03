@@ -13,7 +13,7 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
-const READY: bool = true;
+const READY: bool = false;
 const OFFSET_X: usize = 0;
 const OFFSET_Y: usize = 0;
 
@@ -46,7 +46,7 @@ pub fn main() {
         // Display not-ready
         let label = document.get_element_by_id("pp-label-assigned").unwrap();
         label.set_inner_html(
-            "No image position and offset set yet! Follow the RubberRoss Twitch stream for instructions.",
+            "Nothing yet! Follow the RubberRoss Twitch stream for instructions.",
         );
     }
 }
