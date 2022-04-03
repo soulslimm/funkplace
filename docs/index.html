@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style.css" rel="stylesheet">
-    <title>placeplace</title>
-</head>
-<body class="h-full flex justify-center bg-slate-50">
-    <div class="p-2 mt-8 drop-shadow-md bg-white rounded flex flex-col justify-between" style="width:500px;height:300px;" id="app">
-        <div class="space-y-2">
-            <p id="pp-text">Loading...</p>
-            <div id="pp-color" class="w-16 h-8 bg-slate-50 rounded drop-shadow"></div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="./style.css" rel="stylesheet" />
+        <title>placeplace</title>
+    </head>
+    <body class="h-full flex flex-row justify-center items-start bg-slate-50">
+        <div class="p-3 mt-8 space-x-3 drop-shadow-md bg-white rounded flex flex-row items-stretch">
+            <!-- Canvas view -->
+            <div>
+                <p>Top left: <span id="pp-label-topleft"></span></p>
+                <canvas id="canvas" width="250" height="250"></canvas>
+            </div>
+            <!-- Assigned pixel view -->
+            <div class="flex flex-col justify-between" style="width: 250px">
+                <div class="space-y-3 grow">
+                    <p id="pp-label-assigned">Loading...</p>
+                    <div
+                        id="pp-color"
+                        class="w-20 h-8 bg-white rounded border-2 border-slate-200"
+                    ></div>
+                </div>
+                <button
+                    id="pp-button-new"
+                    class="rounded w-full py-2 bg-blue-500 hover:bg-blue-400 text-white font-semibold drop-shadow"
+                >
+                    New Pixel
+                </button>
+            </div>
         </div>
-        <button id="pp-button-new" class="rounded w-full py-2 bg-blue-500 hover:bg-blue-400 text-white font-semibold drop-shadow">New Pixel</button>
-    </div>
-    <script type="module">
-        import init from './placeplace.js';
-        init();
-    </script>
-</body>
+        <script type="module">
+            import init from './placeplace.js';
+            init();
+        </script>
+    </body>
 </html>

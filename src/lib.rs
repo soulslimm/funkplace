@@ -30,6 +30,12 @@ pub fn main() {
     button.set_onclick(Some(click_handler.as_ref().unchecked_ref()));
     click_handler.forget();
 
+    // Initialize overview data
+    let topleft_text = format!("{}, {}", GLOBAL.offset_x, GLOBAL.offset_y);
+    let label = document.get_element_by_id("pp-label-topleft").unwrap();
+    label.set_inner_html(&topleft_text);
+
+    // Pick pixel automatically
     pick_new_pixel();
 }
 
@@ -53,7 +59,7 @@ fn pick_new_pixel() {
     );
 
     // Initialize the page with the picked color
-    let label = document.get_element_by_id("pp-text").unwrap();
+    let label = document.get_element_by_id("pp-label-assigned").unwrap();
     label.set_inner_html(&text);
 
     let color_box = document

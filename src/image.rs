@@ -4,7 +4,7 @@ use png::ColorType;
 
 pub fn load_image_cells(lookup: &HashMap<[u8; 3], usize>) -> (usize, usize, Vec<u8>) {
     // Load the image from bundled data
-    let image_data = include_bytes!("../docs/image.png");
+    let image_data = include_bytes!("../image.png");
     let decoder = png::Decoder::new(Cursor::new(image_data));
     let mut reader = decoder.read_info().unwrap();
 
