@@ -13,7 +13,7 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
-const READY: bool = false;
+const READY: bool = true;
 const OFFSET_X: usize = 0;
 const OFFSET_Y: usize = 0;
 
@@ -45,9 +45,7 @@ pub fn main() {
     } else {
         // Display not-ready
         let label = document.get_element_by_id("pp-label-assigned").unwrap();
-        label.set_inner_html(
-            "Nothing yet! Follow the RubberRoss Twitch stream for instructions.",
-        );
+        label.set_inner_html("Nothing yet! Follow the RubberRoss Twitch stream for instructions.");
     }
 }
 
@@ -90,12 +88,16 @@ fn pick_new_pixel() {
 
     let color = &GLOBAL.colors[GLOBAL.cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
+    let direct_link = format!("https://www.reddit.com/r/place/?cx={}&cy={}&px=11", x, y);
+    let link_html = format!("<a href=\"{}\">Direct link to r/place location...</a>", direct_link);
 
     let color_str = color_to_rgb(color.color);
 
     // Initialize the page with the picked color
-    let label = document.get_element_by_id("pp-label-assigned").unwrap();
-    label.set_inner_html(&text);
+    let label_asigned = document.get_element_by_id("pp-label-assigned").unwrap();
+    label_asigned.set_inner_html(&text);
+    let label_link = document.get_element_by_id("pp-label-directlink").unwrap();
+    label_link.set_inner_html(&link_html);
 
     let color_box = document
         .get_element_by_id("pp-color")
