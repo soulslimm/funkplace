@@ -7,13 +7,12 @@ use rand::Rng;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(start)]
-pub fn main() -> Result<(), JsValue> {
+pub fn main() {
     let offset_x = 0;
     let offset_y = 0;
 
-    let window = web_sys::window().expect("no global `window` exists");
-    let document = window.document().expect("should have a document on window");
-    let body = document.body().expect("document should have a body");
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
 
     // Initialize color friendly info
     let colors = vec![
@@ -122,7 +121,7 @@ pub fn main() -> Result<(), JsValue> {
     }
 
     // Load the image from bundled data
-    let image_data = include_bytes!("../image.png");
+    let image_data = include_bytes!("../docs/image.png");
     let decoder = png::Decoder::new(Cursor::new(image_data));
     let mut reader = decoder.read_info().unwrap();
 
@@ -160,13 +159,9 @@ pub fn main() -> Result<(), JsValue> {
     let color = &colors[cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
 
-    // Append picked color
-    let val = document.create_element("p")?;
+    // Initialize the page with the picked color
+    let val = document.get_element_by_id("app").unwrap();
     val.set_inner_html(&text);
-
-    body.append_child(&val)?;
-
-    Ok(())
 }
 
 struct ColorOption {
