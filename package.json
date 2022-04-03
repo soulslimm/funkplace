@@ -1,0 +1,11 @@
+{
+  "name": "placeplace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build-css": "tailwindcss -i ./style.css -o ./docs/style.css"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.0.23"
+  }
+}
