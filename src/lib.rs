@@ -9,7 +9,7 @@ use once_cell::sync::Lazy;
 use palette::PaletteColor;
 use rand::Rng;
 use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::{HtmlCanvasElement, HtmlElement, CanvasRenderingContext2d};
+use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
@@ -83,10 +83,7 @@ fn pick_new_pixel() {
     let color = &GLOBAL.colors[GLOBAL.cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
 
-    let color_str = format!(
-        "rgb({}, {}, {})",
-        color.color[0], color.color[1], color.color[2]
-    );
+    let color_str = color_to_rgb(color.color);
 
     // Initialize the page with the picked color
     let label = document.get_element_by_id("pp-label-assigned").unwrap();
@@ -123,7 +120,35 @@ fn redraw_canvas() {
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
 
-    // Draw a test square just to see if it works
-    context.clear_rect(0.0, 0.0, canvas.width() as f64, canvas.height() as f64);
-    context.fill_rect(10.0, 10.0, 20.0, 20.0);
+    // Get relative coordinates for centering the image
+    let canvas_width = canvas.width() as u32;
+    let canvas_height = canvas.height() as u32;
+    let image_width = GLOBAL.width as u32;
+    let image_height = GLOBAL.height as u32;
+    let offset_x = (canvas_width - image_width) / 2;
+    let offset_y = (canvas_height - image_height) / 2;
+
+    let pixel_size = 5;
+
+    // Clear the canvas before drawing the new content
+    context.clear_rect(0.0, 0.0, canvas_width as f64, canvas_height as f64);
+
+    // Draw the image centered on the screen
+    for (i, cell) in GLOBAL.cells.iter().enumerate() {
+        let x = (i % GLOBAL.width) as u32;
+        let y = (i / GLOBAL.height) as u32;
+
+        let fill = color_to_rgb(GLOBAL.colors[*cell as usize].color);
+        context.set_fill_style(&fill.into());
+        context.fill_rect(
+            (offset_x + (x * pixel_size)) as f64,
+            (offset_y + (y * pixel_size)) as f64,
+            pixel_size as f64,
+            pixel_size as f64,
+        );
+    }
+}
+
+fn color_to_rgb(color: [u8; 3]) -> String {
+    format!("rgb({}, {}, {})", color[0], color[1], color[2])
 }
