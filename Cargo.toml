@@ -22,4 +22,6 @@ features = [
   'Node',
   'Window',
   'CssStyleDeclaration',
+  'CanvasRenderingContext2d',
+  'HtmlCanvasElement',
 ]

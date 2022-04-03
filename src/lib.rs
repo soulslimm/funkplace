@@ -9,7 +9,7 @@ use once_cell::sync::Lazy;
 use palette::PaletteColor;
 use rand::Rng;
 use wasm_bindgen::{prelude::*, JsCast};
-use web_sys::HtmlElement;
+use web_sys::{HtmlCanvasElement, HtmlElement, CanvasRenderingContext2d};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
@@ -37,6 +37,36 @@ pub fn main() {
 
     // Pick pixel automatically
     pick_new_pixel();
+}
+
+static GLOBAL: Lazy<GlobalData> = Lazy::new(|| {
+    let colors = create_palette();
+
+    // Create a lookup map for image decoding
+    let mut lookup = HashMap::new();
+    for (i, color) in colors.iter().enumerate() {
+        lookup.insert(color.color, i);
+    }
+
+    let (width, height, cells) = load_image_cells(&lookup);
+
+    GlobalData {
+        colors,
+        width,
+        height,
+        offset_x: 0,
+        offset_y: 0,
+        cells,
+    }
+});
+
+struct GlobalData {
+    colors: Vec<PaletteColor>,
+    width: usize,
+    height: usize,
+    offset_x: usize,
+    offset_y: usize,
+    cells: Vec<u8>,
 }
 
 fn pick_new_pixel() {
@@ -71,34 +101,29 @@ fn pick_new_pixel() {
         .style()
         .set_property("background-color", &color_str)
         .unwrap();
+
+    // Redraw the canvas with the picked pixel
+    redraw_canvas();
 }
 
-static GLOBAL: Lazy<GlobalData> = Lazy::new(|| {
-    let colors = create_palette();
+fn redraw_canvas() {
+    let window = web_sys::window().unwrap();
+    let document = window.document().unwrap();
 
-    // Create a lookup map for image decoding
-    let mut lookup = HashMap::new();
-    for (i, color) in colors.iter().enumerate() {
-        lookup.insert(color.color, i);
-    }
+    // Fetch canvas and context from the DOM
+    let canvas = document
+        .get_element_by_id("pp-canvas")
+        .unwrap()
+        .dyn_into::<HtmlCanvasElement>()
+        .unwrap();
+    let context = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::<CanvasRenderingContext2d>()
+        .unwrap();
 
-    let (width, height, cells) = load_image_cells(&lookup);
-
-    GlobalData {
-        colors,
-        width,
-        height,
-        offset_x: 0,
-        offset_y: 0,
-        cells,
-    }
-});
-
-struct GlobalData {
-    colors: Vec<PaletteColor>,
-    width: usize,
-    height: usize,
-    offset_x: usize,
-    offset_y: usize,
-    cells: Vec<u8>,
+    // Draw a test square just to see if it works
+    context.clear_rect(0.0, 0.0, canvas.width() as f64, canvas.height() as f64);
+    context.fill_rect(10.0, 10.0, 20.0, 20.0);
 }
