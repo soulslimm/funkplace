@@ -24,4 +24,5 @@ features = [
   'CssStyleDeclaration',
   'CanvasRenderingContext2d',
   'HtmlCanvasElement',
+  'console',
 ]

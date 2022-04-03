@@ -26,7 +26,8 @@ pub fn load_image_cells(lookup: &HashMap<[u8; 3], usize>) -> (usize, usize, Vec<
         let pixel = &bytes[start_byte..start_byte + 4];
         let color = [pixel[0], pixel[1], pixel[2]];
 
-        println!("{} {} {:?}", x, y, color);
+        let log_text = format!("{} {} {:?}", x, y, color);
+        web_sys::console::log_1(&log_text.into());
 
         let color_index = lookup.get(&color).expect("Failed to look up color");
         *cell = *color_index as u8;
