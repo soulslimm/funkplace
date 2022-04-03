@@ -152,7 +152,7 @@ fn redraw_canvas(pixel_x: u32, pixel_y: u32) {
     let pixel_canvax_x = offset_x + (pixel_x * pixel_size);
     let pixel_canvax_y = offset_y + (pixel_y * pixel_size);
 
-    context.set_fill_style(&"rgba(255, 0, 0, 0.5)".into());
+    context.set_fill_style(&"rgba(255, 0, 0, 0.8)".into());
 
     // top
     context.fill_rect(
@@ -171,16 +171,16 @@ fn redraw_canvas(pixel_x: u32, pixel_y: u32) {
     // left
     context.fill_rect(
         (pixel_canvax_x - 2) as f64,
-        (pixel_canvax_y - 2) as f64,
+        (pixel_canvax_y) as f64,
         2.0,
-        (pixel_size + 4) as f64,
+        (pixel_size) as f64,
     );
     // right
     context.fill_rect(
         (pixel_canvax_x + pixel_size) as f64,
-        (pixel_canvax_y - 2) as f64,
+        (pixel_canvax_y) as f64,
         2.0,
-        (pixel_size + 4) as f64,
+        (pixel_size) as f64,
     );
 }
 
