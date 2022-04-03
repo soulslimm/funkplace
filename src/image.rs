@@ -12,10 +12,12 @@ pub fn load_image_cells(lookup: &HashMap<[u8; 3], usize>) -> (usize, usize, Vec<
     let info = reader.next_frame(&mut buf).unwrap();
     let bytes = &buf[..info.buffer_size()];
 
+    let log_text = format!("Decoding {:?}", info.color_type);
+    web_sys::console::log_1(&log_text.into());
+
     assert_eq!(info.color_type, ColorType::Rgba);
 
     // Decode the image
-    println!("Decoding image...");
     let mut cells = vec![0u8; (info.width * info.height) as usize];
     let (width, height) = (info.width as usize, info.height as usize);
     for (i, cell) in cells.iter_mut().enumerate() {
