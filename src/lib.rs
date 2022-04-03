@@ -120,15 +120,15 @@ fn redraw_canvas() {
         .dyn_into::<CanvasRenderingContext2d>()
         .unwrap();
 
+    let pixel_size = 5;
+
     // Get relative coordinates for centering the image
     let canvas_width = canvas.width() as u32;
     let canvas_height = canvas.height() as u32;
-    let image_width = GLOBAL.width as u32;
-    let image_height = GLOBAL.height as u32;
+    let image_width = GLOBAL.width as u32 * pixel_size;
+    let image_height = GLOBAL.height as u32 * pixel_size;
     let offset_x = (canvas_width - image_width) / 2;
     let offset_y = (canvas_height - image_height) / 2;
-
-    let pixel_size = 5;
 
     // Clear the canvas before drawing the new content
     context.clear_rect(0.0, 0.0, canvas_width as f64, canvas_height as f64);
