@@ -152,7 +152,7 @@ fn redraw_canvas(pixel_x: u32, pixel_y: u32) {
     let pixel_canvax_x = offset_x + (pixel_x * pixel_size);
     let pixel_canvax_y = offset_y + (pixel_y * pixel_size);
 
-    context.set_fill_style(&"rgba(255, 0, 0, 100)".into());
+    context.set_fill_style(&"rgba(255, 0, 0, 0.5)".into());
 
     // top
     context.fill_rect(
