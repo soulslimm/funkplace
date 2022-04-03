@@ -100,10 +100,10 @@ fn pick_new_pixel() {
         .unwrap();
 
     // Redraw the canvas with the picked pixel
-    redraw_canvas();
+    redraw_canvas(relative_x as u32, relative_y as u32);
 }
 
-fn redraw_canvas() {
+fn redraw_canvas(pixel_x: u32, pixel_y: u32) {
     let window = web_sys::window().unwrap();
     let document = window.document().unwrap();
 
@@ -147,6 +147,38 @@ fn redraw_canvas() {
             pixel_size as f64,
         );
     }
+
+    // Outline the picked pixel
+    let pixel_canvax_x = offset_x + (pixel_x * pixel_size);
+    let pixel_canvax_y = offset_y + (pixel_y * pixel_size);
+    // top
+    context.fill_rect(
+        (pixel_canvax_x - 2) as f64,
+        (pixel_canvax_y - 2) as f64,
+        (pixel_size + 4) as f64,
+        2.0,
+    );
+    // bottom
+    context.fill_rect(
+        (pixel_canvax_x + pixel_size) as f64,
+        (pixel_canvax_y - 2) as f64,
+        (pixel_size + 4) as f64,
+        2.0,
+    );
+    // left
+    context.fill_rect(
+        (pixel_canvax_x - 2) as f64,
+        (pixel_canvax_y - 2) as f64,
+        2.0,
+        (pixel_size + 4) as f64,
+    );
+    // right
+    context.fill_rect(
+        (pixel_canvax_x + pixel_size) as f64,
+        (pixel_canvax_y - 2) as f64,
+        2.0,
+        (pixel_size + 4) as f64,
+    );
 }
 
 fn color_to_rgb(color: [u8; 3]) -> String {
