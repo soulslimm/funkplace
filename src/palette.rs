@@ -6,6 +6,10 @@ pub struct PaletteColor {
 pub fn create_palette() -> Vec<PaletteColor> {
     vec![
         PaletteColor {
+            name: "burgundy".to_string(),
+            color: [109, 0, 26],
+        },
+        PaletteColor {
             name: "dark red".to_string(),
             color: [190, 0, 57],
         },
@@ -20,6 +24,10 @@ pub fn create_palette() -> Vec<PaletteColor> {
         PaletteColor {
             name: "yellow".to_string(),
             color: [255, 214, 53],
+        },
+        PaletteColor {
+            name: "pale yellow".to_string(),
+            color: [255, 248, 184],
         },
         PaletteColor {
             name: "dark green".to_string(),
@@ -42,6 +50,10 @@ pub fn create_palette() -> Vec<PaletteColor> {
             color: [0, 158, 170],
         },
         PaletteColor {
+            name: "light teal".to_string(),
+            color: [0, 204, 192],
+        },
+        PaletteColor {
             name: "dark blue".to_string(),
             color: [36, 80, 164],
         },
@@ -62,12 +74,24 @@ pub fn create_palette() -> Vec<PaletteColor> {
             color: [106, 92, 255],
         },
         PaletteColor {
+            name: "lavender".to_string(),
+            color: [148, 179, 255],
+        },
+        PaletteColor {
             name: "dark purple".to_string(),
             color: [129, 30, 159],
         },
         PaletteColor {
             name: "purple".to_string(),
             color: [180, 74, 192],
+        },
+        PaletteColor {
+            name: "pale purple".to_string(),
+            color: [228, 171, 255],
+        },
+        PaletteColor {
+            name: "magenta".to_string(),
+            color: [222, 16, 127],
         },
         PaletteColor {
             name: "pink".to_string(),
@@ -86,8 +110,16 @@ pub fn create_palette() -> Vec<PaletteColor> {
             color: [156, 105, 38],
         },
         PaletteColor {
+            name: "beige".to_string(),
+            color: [255, 180, 112],
+        },
+        PaletteColor {
             name: "black".to_string(),
             color: [0, 0, 0],
+        },
+        PaletteColor {
+            name: "dark gray".to_string(),
+            color: [81, 82, 82],
         },
         PaletteColor {
             name: "gray".to_string(),
