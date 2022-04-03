@@ -13,30 +13,42 @@ use web_sys::{CanvasRenderingContext2d, HtmlCanvasElement, HtmlElement};
 
 use crate::{image::load_image_cells, palette::create_palette};
 
+const READY: bool = true;
+const OFFSET_X: usize = 0;
+const OFFSET_Y: usize = 0;
+
 #[wasm_bindgen(start)]
 pub fn main() {
     let window = web_sys::window().unwrap();
     let document = window.document().unwrap();
 
-    // Set up the button
-    let button = document
-        .get_element_by_id("pp-button-new")
-        .unwrap()
-        .dyn_into::<HtmlElement>()
-        .unwrap();
-    let click_handler = Closure::wrap(Box::new(move || {
+    if READY {
+        // Set up the button
+        let button = document
+            .get_element_by_id("pp-button-new")
+            .unwrap()
+            .dyn_into::<HtmlElement>()
+            .unwrap();
+        let click_handler = Closure::wrap(Box::new(move || {
+            pick_new_pixel();
+        }) as Box<dyn FnMut()>);
+        button.set_onclick(Some(click_handler.as_ref().unchecked_ref()));
+        click_handler.forget();
+
+        // Initialize overview data
+        let topleft_text = format!("{}, {}", OFFSET_X, OFFSET_Y);
+        let label = document.get_element_by_id("pp-label-topleft").unwrap();
+        label.set_inner_html(&topleft_text);
+
+        // Pick pixel automatically
         pick_new_pixel();
-    }) as Box<dyn FnMut()>);
-    button.set_onclick(Some(click_handler.as_ref().unchecked_ref()));
-    click_handler.forget();
-
-    // Initialize overview data
-    let topleft_text = format!("{}, {}", GLOBAL.offset_x, GLOBAL.offset_y);
-    let label = document.get_element_by_id("pp-label-topleft").unwrap();
-    label.set_inner_html(&topleft_text);
-
-    // Pick pixel automatically
-    pick_new_pixel();
+    } else {
+        // Display not-ready
+        let label = document.get_element_by_id("pp-label-assigned").unwrap();
+        label.set_inner_html(
+            "No image position and offset set yet! Follow the RubberRoss Twitch stream for instructions.",
+        );
+    }
 }
 
 static GLOBAL: Lazy<GlobalData> = Lazy::new(|| {
@@ -54,8 +66,6 @@ static GLOBAL: Lazy<GlobalData> = Lazy::new(|| {
         colors,
         width,
         height,
-        offset_x: 0,
-        offset_y: 0,
         cells,
     }
 });
@@ -64,8 +74,6 @@ struct GlobalData {
     colors: Vec<PaletteColor>,
     width: usize,
     height: usize,
-    offset_x: usize,
-    offset_y: usize,
     cells: Vec<u8>,
 }
 
@@ -77,8 +85,8 @@ fn pick_new_pixel() {
     let index = rand::thread_rng().gen_range(1..(GLOBAL.cells.len()));
     let relative_x = index % GLOBAL.width;
     let relative_y = index / GLOBAL.height;
-    let x = relative_x + GLOBAL.offset_x;
-    let y = relative_y + GLOBAL.offset_y;
+    let x = relative_x + OFFSET_X;
+    let y = relative_y + OFFSET_Y;
 
     let color = &GLOBAL.colors[GLOBAL.cells[index] as usize];
     let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
