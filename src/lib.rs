@@ -87,7 +87,7 @@ fn pick_new_pixel() {
     let y = relative_y + OFFSET_Y;
 
     let color = &GLOBAL.colors[GLOBAL.cells[index] as usize];
-    let text = format!("Your pixel is {} at {}, {}!", color.name, x, y);
+    let text = format!("Your pixel is <span class=\"font-semibold\">{}</span> at <span class=\"font-semibold\">{}</span>, <span class=\"font-semibold\">{}</span>!", color.name, x, y);
     let direct_link = format!("https://www.reddit.com/r/place/?cx={}&cy={}&px=11", x, y);
     let link_html = format!("<a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{}\">Direct link to r/place location...</a>", direct_link);
 
